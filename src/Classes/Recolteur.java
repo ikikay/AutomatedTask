@@ -10,6 +10,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,16 +18,16 @@ import java.util.logging.Logger;
  *
  * @author Ikikay
  */
-public class MyRobot extends Thread {
+public class Recolteur extends Thread {
 
     public Rectangle overlayArea;
-    public OBufferedImage targetRessource;
-    public OBufferedImage action;
-    public OBufferedImage actionInProgress;
+    public NamedBufferedImage target;
+    public NamedBufferedImage action;
+    public NamedBufferedImage actionInProgress;
 
-    public MyRobot(int x, int y, int width, int height, OBufferedImage theTarget, OBufferedImage theAction, OBufferedImage theActionInProgress) {
+    public Recolteur(int x, int y, int width, int height, NamedBufferedImage theTarget, NamedBufferedImage theAction, NamedBufferedImage theActionInProgress) {
         this.overlayArea = new Rectangle(x, y, width, height);
-        this.targetRessource = theTarget;
+        this.target = theTarget;
         this.action = theAction;
         this.actionInProgress = theActionInProgress;
     }
@@ -39,7 +40,7 @@ public class MyRobot extends Thread {
 
                 System.out.println("Screen de la zone");
                 // Screen la zone de l'Overlay
-                OBufferedImage capturedOverlayArea = (OBufferedImage) robot.createScreenCapture(new Rectangle(this.overlayArea));
+                BufferedImage capturedOverlayArea = robot.createScreenCapture(new Rectangle(this.overlayArea));
 
                 Point actionInProgressPosition = search(capturedOverlayArea, actionInProgress);
                 if ((actionInProgressPosition.getX() != 0)
@@ -47,29 +48,27 @@ public class MyRobot extends Thread {
 
                     System.out.println("Action en cours, reboot");
                     this.sleep(500);
-                    break;
 
                 } else {
 
                     System.out.println("Aucune action en cours, Ok pour recherche de ressources");
-                    Point ressourcePosition = search(capturedOverlayArea, targetRessource);
+                    Point targetPosition = search(capturedOverlayArea, target);
 
-                    if ((ressourcePosition.getX() == 0)
-                            && (ressourcePosition.getY() == 0)) {
+                    if ((targetPosition.getX() == 0)
+                            && (targetPosition.getY() == 0)) {
 
                         System.out.println("Aucune ressource trouvé, reboot");
                         this.sleep(500);
-                        break;
 
                     } else {
 
                         System.out.println("Clique droit sur la ressource");
-                        robot.mouseMove((int) ressourcePosition.getX(), (int) ressourcePosition.getY());
+                        robot.mouseMove((int) targetPosition.getX(), (int) targetPosition.getY());
                         robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);         // Clique droit
                         this.sleep(250);
                         robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);       // Relache le clique droit
                         System.out.println("Déplacement de la souris pour suppression overlay");
-                        robot.mouseMove((int) ressourcePosition.getX() + 150, (int) ressourcePosition.getY() + 150);
+                        robot.mouseMove((int) targetPosition.getX() + 150, (int) targetPosition.getY() + 150);
                         this.sleep(250);
 
                         Point actionPosition = search(capturedOverlayArea, action);
@@ -79,7 +78,6 @@ public class MyRobot extends Thread {
 
                             System.out.println("Overlay d'action introuvable ... Reboot");
                             this.sleep(500);
-                            break;
 
                         } else {
 
@@ -97,15 +95,15 @@ public class MyRobot extends Thread {
                 } // Action In progress Position
 
             } catch (AWTException ex) {
-                Logger.getLogger(MyRobot.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Recolteur.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(MyRobot.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Recolteur.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    public Point search(OBufferedImage researchZone, OBufferedImage target) {
-        System.out.println("Scanning en cours, recherche de : " + target.getName());
+    public Point search(BufferedImage researchZone, NamedBufferedImage cible) {
+        System.out.println("Scanning en cours, recherche de : " + cible.getName());
         Point position = new Point();
 
         // Parcours les colonnes de la zone
@@ -117,12 +115,12 @@ public class MyRobot extends Thread {
                 boolean matches = true;
                 // (SI MATCH) vérifie les autres pixels d'après le modèle :
                 // Parcours les colonnes du modèle
-                for (int y2 = 0; y2 < target.getHeight() && matches; y2++) {
+                for (int y2 = 0; y2 < cible.getImage().getHeight() && matches; y2++) {
                     // Parcours les lignes du modèle
-                    for (int x2 = 0; x2 < target.getWidth() && matches; x2++) {
+                    for (int x2 = 0; x2 < cible.getImage().getWidth() && matches; x2++) {
 
                         // Vérifie le matching
-                        if (target.getRGB(x2, y2) != researchZone.getRGB(x + x2, y + y2)) {
+                        if (cible.getImage().getRGB(x2, y2) != researchZone.getRGB(x + x2, y + y2)) {
                             matches = false;
                         }
 
@@ -130,14 +128,14 @@ public class MyRobot extends Thread {
                 }
                 
                 if (matches) {
-                    System.out.println(target.getName() + " trouvé en position " + x + ", " + y);
+                    System.out.println(cible.getName() + " trouvé en position " + x + ", " + y);
                     position.setLocation(x, y);
                     return position;
                 }
 
             }
         }
-        System.out.println(target.getName() + " non trouvé");
+        System.out.println(cible.getName() + " non trouvé");
         return new Point(0, 0);
     }
 

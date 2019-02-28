@@ -5,8 +5,8 @@
  */
 package Forms;
 
-import Classes.MyRobot;
-import Classes.OBufferedImage;
+import Classes.Recolteur;
+import Classes.NamedBufferedImage;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -26,12 +26,12 @@ public class FormOverlay extends javax.swing.JFrame {
 
     int xMouse;
     int yMouse;
-    MyRobot theRobot;
-    OBufferedImage theTarget;
-    OBufferedImage theAction;
-    OBufferedImage theActionInProgress;
+    Recolteur theRecolteur;
+    NamedBufferedImage theTarget;
+    NamedBufferedImage theAction;
+    NamedBufferedImage theActionInProgress;
 
-    public FormOverlay(OBufferedImage target, OBufferedImage action, OBufferedImage actionInProgress) {
+    public FormOverlay(NamedBufferedImage target, NamedBufferedImage action, NamedBufferedImage actionInProgress) {
         theTarget = target;
         theAction = action;
         theActionInProgress = actionInProgress;
@@ -74,7 +74,7 @@ public class FormOverlay extends javax.swing.JFrame {
         panel.add(bAnnuler, gbC);						// ajoute ce bouton, au panel
         bAnnuler.addActionListener((event) -> {					// Créer une " "micro fonction" " lorsque quelque chose se passe sur le bouton
             //Actions lors des cliques sur le bouton 
-            theRobot.interrupt();
+            theRecolteur.interrupt();
         });
         gbC.gridx = 3;
         gbC.gridy = 0;
@@ -83,8 +83,8 @@ public class FormOverlay extends javax.swing.JFrame {
         panel.add(bValider, gbC);						// ajoute ce bouton, au panel
         bValider.addActionListener((event) -> {					// Créer une " "micro fonction" " lorsque quelque chose se passe sur le bouton
             //Actions lors des cliques sur le bouton 
-            theRobot = new MyRobot(this.getX(), this.getY(), this.getWidth(), this.getHeight(), theTarget, theAction, theActionInProgress);
-            theRobot.start();
+            theRecolteur = new Recolteur(this.getX(), this.getY(), this.getWidth(), this.getHeight(), theTarget, theAction, theActionInProgress);
+            theRecolteur.start();
         });
 
         addMouseListener(new MouseListener() {

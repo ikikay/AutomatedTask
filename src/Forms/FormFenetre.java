@@ -5,7 +5,7 @@
  */
 package Forms;
 
-import Classes.OBufferedImage;
+import Classes.NamedBufferedImage;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -57,14 +57,11 @@ public class FormFenetre {
         //Action Boutons
         bAloeVeroRecolter.addActionListener((event) -> {			// Créer une "micro fonction" " lorsque quelque chose se passe sur le bouton
             //Actions lors des cliques sur le bouton
-            OBufferedImage target, action, actionInProgress;
+            NamedBufferedImage target, action, actionInProgress;
             try {
-                target = (OBufferedImage) ImageIO.read(new File("aloeVero.bmp"));
-                target.setName("aloeVero");
-                action = (OBufferedImage) ImageIO.read(new File("recolter.bmp"));
-                action.setName("recolter");
-                actionInProgress = (OBufferedImage) ImageIO.read(new File("recolteInProgress.bmp"));
-                actionInProgress.setName("recolteInProgress");
+                target = new NamedBufferedImage(ImageIO.read(new File("aloeVero.bmp")),"aloeVero");
+                action = new NamedBufferedImage(ImageIO.read(new File("recolter.bmp")),"recolter");
+                actionInProgress = new NamedBufferedImage(ImageIO.read(new File("recolteInProgress.bmp")),"recolteInProgress");
                 FormOverlay formOverlay = new FormOverlay(target, action, actionInProgress);// Ouvre une fenetre formOverlay
             } catch (IOException ex) {
                 Logger.getLogger(FormFenetre.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,14 +75,11 @@ public class FormFenetre {
         //Action Boutons
         bAloeVeroCouper.addActionListener((event) -> {				// Créer une "micro fonction" " lorsque quelque chose se passe sur le bouton
             //Actions lors des cliques sur le bouton
-            OBufferedImage target, action, actionInProgress;
+            NamedBufferedImage target, action, actionInProgress;
             try {
-                target = (OBufferedImage) ImageIO.read(new File("aloeVero.bmp"));
-                target.setName("aloeVero");
-                action = (OBufferedImage) ImageIO.read(new File("couper.bmp"));
-                action.setName("couper");
-                actionInProgress = (OBufferedImage) ImageIO.read(new File("recolteInProgress.bmp"));
-                actionInProgress.setName("recolteInProgress");
+                target = new NamedBufferedImage(ImageIO.read(new File("aloeVero.bmp")),"aloeVero");
+                action = new NamedBufferedImage(ImageIO.read(new File("couper.bmp")),"couper");
+                actionInProgress = new NamedBufferedImage(ImageIO.read(new File("recolteInProgress.bmp")),"recolteInProgress");
                 FormOverlay formOverlay = new FormOverlay(target, action, actionInProgress);// Ouvre une fenetre formOverlay
             } catch (IOException ex) {
                 Logger.getLogger(FormFenetre.class.getName()).log(Level.SEVERE, null, ex);
@@ -100,14 +94,11 @@ public class FormFenetre {
         //Action Boutons
         bTest.addActionListener((event) -> {					// Créer une "micro fonction" " lorsque quelque chose se passe sur le bouton
             //Actions lors des cliques sur le bouton
-            OBufferedImage target, action, actionInProgress;
+            NamedBufferedImage target, action, actionInProgress;
             try {
-                target = (OBufferedImage) ImageIO.read(new File("test.bmp"));
-                target.setName("test");
-                action = (OBufferedImage) ImageIO.read(new File("couper.bmp"));
-                action.setName("couper");
-                actionInProgress = (OBufferedImage) ImageIO.read(new File("recolteInProgress.bmp"));
-                actionInProgress.setName("recolteInProgress");
+                target = new NamedBufferedImage(ImageIO.read(new File("test.bmp")),"test");
+                action = new NamedBufferedImage(ImageIO.read(new File("couper.bmp")),"couper");
+                actionInProgress = new NamedBufferedImage(ImageIO.read(new File("recolteInProgress.bmp")),"recolteInProgress");
                 FormOverlay formOverlay = new FormOverlay(target, action, actionInProgress);// Ouvre une fenetre formOverlay
             } catch (IOException ex) {
                 Logger.getLogger(FormFenetre.class.getName()).log(Level.SEVERE, null, ex);

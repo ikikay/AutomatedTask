@@ -15,19 +15,23 @@ import java.util.Hashtable;
  *
  * @author lulambert
  */
-public class OBufferedImage extends BufferedImage{
-    private String name = "TODO";
+public class OBufferedImage extends BufferedImage {
+
+    private String name;
 
     public OBufferedImage(int width, int height, int imageType) {
         super(width, height, imageType);
+        this.name = "NO NAME SET";
     }
 
     public OBufferedImage(int width, int height, int imageType, IndexColorModel cm) {
         super(width, height, imageType, cm);
+        this.name = "NO NAME SET";
     }
 
     public OBufferedImage(ColorModel cm, WritableRaster raster, boolean isRasterPremultiplied, Hashtable<?, ?> properties) {
         super(cm, raster, isRasterPremultiplied, properties);
+        this.name = "NO NAME SET";
     }
 
     public String getName() {
@@ -37,5 +41,5 @@ public class OBufferedImage extends BufferedImage{
     public void setName(String name) {
         this.name = name;
     }
-        
+
 }

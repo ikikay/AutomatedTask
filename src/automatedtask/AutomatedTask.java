@@ -5,7 +5,7 @@
  */
 package automatedtask;
 
-import automatedtask.Form.FormFenetre;
+import Forms.FormFenetre;
 
 /**
  *
@@ -17,7 +17,7 @@ public class AutomatedTask {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-	FormFenetre formMain = new FormFenetre();				// Instanciation de FormOverlay avec le titre "Menu"
+	FormFenetre formMain = new FormFenetre();				// Instanciation du menu
     }
     
 }

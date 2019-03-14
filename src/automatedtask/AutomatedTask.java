@@ -12,6 +12,18 @@ import Forms.FormFenetre;
  * @author Ikikay
  */
 public class AutomatedTask {
+    
+    public static final int margeTop ;
+    public static final int margeBot;
+    public static final int margeRight;
+    public static final int margeLeft;
+    static
+    {
+	margeTop = 24;
+	margeBot = 54;
+	margeRight = 4;
+	margeLeft = 5;
+    }
 
     /**
      * @param args the command line arguments

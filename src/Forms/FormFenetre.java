@@ -97,8 +97,8 @@ public class FormFenetre {
             NamedBufferedImage target, action, actionInProgress;
             try {
                 target = new NamedBufferedImage(ImageIO.read(new File("test.bmp")),"test");
-                action = new NamedBufferedImage(ImageIO.read(new File("couper.bmp")),"couper");
-                actionInProgress = new NamedBufferedImage(ImageIO.read(new File("recolteInProgress.bmp")),"recolteInProgress");
+                action = new NamedBufferedImage(ImageIO.read(new File("recolter.bmp")),"recolter");
+                actionInProgress = new NamedBufferedImage(ImageIO.read(new File("actionInProgress.bmp")),"actionInProgress");
                 FormOverlay formOverlay = new FormOverlay(target, action, actionInProgress);// Ouvre une fenetre formOverlay
             } catch (IOException ex) {
                 Logger.getLogger(FormFenetre.class.getName()).log(Level.SEVERE, null, ex);

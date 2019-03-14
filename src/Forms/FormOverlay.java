@@ -7,6 +7,7 @@ package Forms;
 
 import Classes.Recolteur;
 import Classes.NamedBufferedImage;
+import static automatedtask.AutomatedTask.*;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -37,10 +38,10 @@ public class FormOverlay extends javax.swing.JFrame {
         theActionInProgress = actionInProgress;
 
         setTitle("Overlay");							// Applique le titre à la fenêtre
-        setBounds(25, 25, 1024, 768);						// Fait une fenêtre de largeur x hauteur avec 25 de marge
+        setBounds(margeLeft, margeTop, 1143 - margeLeft - margeRight, 841 - margeTop - margeBot);						// Fait une fenêtre de largeur x hauteur avec 25 de marge
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);				// Ferme l'application si il n'y à plus de fenêtre
         setUndecorated(true);							// Supprime la barre et les contours de la fenêtre
-        setLocationRelativeTo(null);						// Centre la fenêtre
+        //setLocationRelativeTo(null);						// Centre la fenêtre
         JPanel panel = new JPanel();						// Création d'un JPanel
 
         setLayout(new GridBagLayout());						// Création d'un Layaout de tipe GridBag
@@ -74,7 +75,7 @@ public class FormOverlay extends javax.swing.JFrame {
         panel.add(bAnnuler, gbC);						// ajoute ce bouton, au panel
         bAnnuler.addActionListener((event) -> {					// Créer une " "micro fonction" " lorsque quelque chose se passe sur le bouton
             //Actions lors des cliques sur le bouton 
-            theRecolteur.interrupt();
+            theRecolteur.close();
         });
         gbC.gridx = 3;
         gbC.gridy = 0;
@@ -83,7 +84,11 @@ public class FormOverlay extends javax.swing.JFrame {
         panel.add(bValider, gbC);						// ajoute ce bouton, au panel
         bValider.addActionListener((event) -> {					// Créer une " "micro fonction" " lorsque quelque chose se passe sur le bouton
             //Actions lors des cliques sur le bouton 
+            if (theRecolteur != null) {
+                theRecolteur.close();
+            }
             theRecolteur = new Recolteur(this.getX(), this.getY(), this.getWidth(), this.getHeight(), theTarget, theAction, theActionInProgress);
+
             theRecolteur.start();
         });
 
